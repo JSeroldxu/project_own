@@ -26,7 +26,7 @@
     },
     methods: {
       login(){
-        this.$router.push({name:''})
+        this.$router.push({name:'Index'})
       }
     }
   }
