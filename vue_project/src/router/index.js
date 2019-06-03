@@ -8,8 +8,18 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      name: 'Loading',
+      component: resolve => require(['@/view/loading'],resolve),
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: resolve => require(['@/view/login'],resolve),
+      childred:[
+        {
+
+        }
+      ]
     }
   ]
 })
