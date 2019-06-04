@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS数组去重</title>
+</head>
+
+<body>
+    <script>
+        let arr = [2, 3, 4, 4, 6, 66, 4, 743, 243, 22, 2, 4];
+
+        // 一、遍历数组法，新建一个数组，遍历原数组，如果不存在就存入新数组中，最后输出新数组
+        function first(arr) {
+            let array = []
+            for (let i = 0; i < arr.length; i++) {
+                if (array.indexOf(arr[i]) == -1) {
+                    array.push(arr[i])
+                }
+            }
+            return array;
+        }
+        // 排序后相邻去除，排序后对原数组进行遍历，如果与新数组的length - 1的值不同，就添加到新数组中最后输出新数组
+        function sortNum(a, b) {
+            return a - b;
+        }
+        function second(arr) {
+            arr.sort(sortNum)
+            let array = [arr[0]]
+            for (let i = 0; i < arr.length; i++) {
+                if (arr[i] != array[array.length - 1]) {
+                    array.push(arr[i])
+                }
+            }
+            return array;
+        }
+        // 优化遍历数组法（推荐）
+        function third(arr) {
+            let array = [];
+            for (let i = 0; i < arr.length; i++) {
+                for (let j = i + 1; j < arr.length; j++) {
+                    if (arr[i] == arr[j]) {
+                        ++i
+                    }
+                }
+                array.push(arr[i]);
+            }
+            return array;
+        }
+        // ES6 set，set方法由ES6提供，里面的值都是唯一的
+        function setArr(arr) {
+            let es6Set = new Set(arr)
+            return [...es6Set];
+        }
+
+        console.log('遍历数组法')
+        console.log(first(arr))
+        console.log('排序后相邻去除法')
+        console.log(second(arr))
+        console.log('ES6 set')
+        console.log(setArr(arr))
+        console.log('优化遍历数组法')
+        console.log(third(arr))
+    </script>
+</body>
+
+</html>

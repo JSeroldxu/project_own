@@ -16,6 +16,11 @@ export default new Router({
       component: resolve => require(['@/view/login'],resolve),
     },
     {
+      path: '/ceshi',
+      name: 'ceshi',
+      component: resolve => require(['@/view/ceshi'],resolve),
+    },
+    {
       path: '/index',
       name: 'Index',
       component: resolve => require(['@/view/Index'],resolve),
