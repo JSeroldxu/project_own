@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    #box {
+      width: 100px;
+      height: 100px;
+      background: red;
+      position: absolute
+    }
+
+  </style>
+</head>
+
+<body style="position: relative;overflow: hidden;">
+  <div id="box">
+
+  </div>
+
+  <script>
+    window.onload = function () {
+      let box = document.getElementById('box')
+      box.onmousedown = function (ev) {
+        let e = ev || event;
+        let x = e.clientX - box.offsetLeft;     //鼠标点击坐标距离盒子左边缘的距离
+        let y = e.clientY - box.offsetTop;     //鼠标点击坐标距离盒子上边缘的距离
+        document.onmousemove = function (ev) {
+          let e = ev || event;
+          box.style.left = ev.clientX - x + 'px';
+          box.style.top = ev.clientY - y + 'px';
+          
+          let bodyScreenX = ev.screenX
+          let bodyClientWidth = document.body.clientWidth
+          
+          document.onmouseup = function (ev) {
+            if (ev.clientX - x < 0) {
+              box.style.left = 0
+            } else if (bodyScreenX > bodyClientWidth) {
+              box.style.right = 0
+              box.style.left = bodyClientWidth - 100 + 'px'
+            }
+            document.onmousemove = null;
+            document.onmouseup = null;
+          }
+        }
+      }
+    }
+
+  </script>
+</body>
+
+</html>

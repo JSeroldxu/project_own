@@ -1,13 +1,8 @@
 <!--  -->
 <template>
   <div class="box">
-    <div
-      style="width: 100%;height: 100%;"
-      @touchstart.prevent="touchStart"
-      @touchmove.prevent="touchMove"
-      @touchend="touchEnd"
-      ref="back"
-    >
+    <div style="width: 100%;height: 100%;" ref="back">
+      <!--  @touchstart="touchStart" @touchmove.prevent="touchMove" @touchend="touchEnd"  -->
       <!-- <router-view></router-view> -->
       <first-page ref="first_page"></first-page>
       <second-page ref="second_page"></second-page>
@@ -64,24 +59,23 @@ export default {
           ? 2
           : 0,
       icon: {
-          xinyongka: {
-            normal: '../../../static/img/nav/信用卡1@2x.png',
-            active: '../../../static/img/nav/信用卡2@2x.png'
-          },
-          faxian: {
-            normal: '../../../static/img/nav/发现1@2x.png',
-            active: '../../../static/img/nav/发现2@2x.png'
-          },
-          wode: {
-            normal: '../../../static/img/nav/我的1@2x.png',
-            active: '../../../static/img/nav/我的2@2x.png'
-          },
-          daikuan: {
-            normal: '../../../static/img/nav/贷款1@2x.png',
-            active: '../../../static/img/nav/贷款2@2x.png'
-          }
-
+        xinyongka: {
+          normal: "../../../static/img/nav/信用卡1@2x.png",
+          active: "../../../static/img/nav/信用卡2@2x.png"
         },
+        faxian: {
+          normal: "../../../static/img/nav/发现1@2x.png",
+          active: "../../../static/img/nav/发现2@2x.png"
+        },
+        wode: {
+          normal: "../../../static/img/nav/我的1@2x.png",
+          active: "../../../static/img/nav/我的2@2x.png"
+        },
+        daikuan: {
+          normal: "../../../static/img/nav/贷款1@2x.png",
+          active: "../../../static/img/nav/贷款2@2x.png"
+        }
+      },
       currentPlay: "firstPage",
       percent: 0,
       touch: {}
@@ -100,24 +94,29 @@ export default {
   methods: {
     touchStart(e) {
       const touch = e.touches[0];
-
+      e.stopPropagation();
       this.touch.startX = touch.pageX;
       this.touch.startY = touch.pageY;
     },
     touchMove(e) {
-      console.clear()
+      console.clear();
       console.log("move");
       const touch = e.touches[0];
       const deltaX = touch.pageX - this.touch.startX;
       const deltaY = touch.pageY - this.touch.startY;
-      console.log('deltaX:--'+deltaX)
-      console.log('deltaY:--'+deltaY)
+      console.log("deltaX:--" + deltaX);
+      console.log("deltaY:--" + deltaY);
       if (Math.abs(deltaY) > Math.abs(deltaX)) {
         return;
       }
-      console.log('window.innerWidth:'+window.innerWidth)
-      const left = this.currentPlay == "firstPage" ? 0 :  this.currentPlay == "second" ? -375 :  -window.innerWidth;
-      console.log('left:--'+left)
+      console.log("window.innerWidth:" + window.innerWidth);
+      const left =
+        this.currentPlay == "firstPage"
+          ? 0
+          : this.currentPlay == "second"
+          ? -375
+          : -window.innerWidth;
+      console.log("left:--" + left);
       var offsetWidth = Math.min(
         0,
         Math.max(-window.innerWidth, left + deltaX)
@@ -125,7 +124,6 @@ export default {
       this.percent = Math.abs(offsetWidth / window.innerWidth);
       this.$refs.back.style["transform"] = `translate3d(${offsetWidth}px,0,0)`;
       this.$refs.back.style["transitionDuration"] = 10;
-  
     },
     touchEnd() {
       console.log(this.currentPlay);
@@ -144,18 +142,18 @@ export default {
       } else if (this.currentPlay === "secondPage") {
         if (this.percent < 0.7) {
           this.currentPlay = "firstPage";
-           this.active = 0;
+          this.active = 0;
           offsetWidth = 0;
         } else {
           this.currentPlay = "thirdPage";
           this.active = 2;
           offsetWidth = -window.innerWidth;
-          console.log(this.currentPlay)
+          console.log(this.currentPlay);
         }
       } else if (this.currentPlay === "thirdPage") {
         if (this.percent < 0.7) {
           this.currentPlay = "secondPage";
-           this.active = 1;
+          this.active = 1;
           offsetWidth = 0;
         } else {
           this.currentPlay = "firstPage";
@@ -174,6 +172,6 @@ export default {
   height: 100%;
   width: 100%;
   white-space: nowrap;
-  font-size:0;
+  font-size: 0;
 }
 </style>

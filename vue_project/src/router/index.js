@@ -21,6 +21,11 @@ export default new Router({
       component: resolve => require(['@/view/ceshi'],resolve),
     },
     {
+      path: '/slidingBlock',
+      name: 'slidingBlock',
+      component: resolve => require(['@/view/demo/slidingBlock'],resolve),
+    },
+    {
       path: '/index',
       name: 'Index',
       component: resolve => require(['@/view/Index'],resolve),
