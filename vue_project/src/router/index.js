@@ -16,16 +16,6 @@ export default new Router({
       component: resolve => require(['@/view/login'],resolve),
     },
     {
-      path: '/ceshi',
-      name: 'ceshi',
-      component: resolve => require(['@/view/ceshi'],resolve),
-    },
-    {
-      path: '/slidingBlock',
-      name: 'slidingBlock',
-      component: resolve => require(['@/view/demo/slidingBlock'],resolve),
-    },
-    {
       path: '/index',
       name: 'Index',
       component: resolve => require(['@/view/Index'],resolve),
@@ -34,7 +24,7 @@ export default new Router({
           path: '/first',
           name: 'firstPage',
           component: resolve => require(['@/view/index/firstPage'],resolve),
-          
+
         },
         {
           path: '/second',
@@ -47,6 +37,11 @@ export default new Router({
           component: resolve => require(['@/view/index/thirdPage'],resolve),
         },
       ]
-    }
+    },
+    {
+      path: '/detail',
+      name: 'bookDetails',
+      component: resolve => require(['@/view/index/book/bookDetails'],resolve),
+    },
   ]
 })

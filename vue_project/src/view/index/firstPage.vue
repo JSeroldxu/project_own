@@ -1,67 +1,116 @@
 <!--  -->
 <template>
   <div class="first_box">
-
-    <div class="img_scale"
-         @click="selectImg($event)">
-      <img :src="url"
-           alt="">
-    </div>
-    <imgScale :imgUrl="clickUrl"
-              v-if="ImgShow"></imgScale>
+    <van-nav-bar title="首页">
+      <van-icon name="search" slot="right"/>
+    </van-nav-bar>
+    <main>
+      <ul>
+        <li v-for="(noval,index) in indexData" :key="index" @click="selectBook(noval._id)">
+          <div class="book_cover">
+            <img :src="noval.cover" alt="" v-lazy="noval.cover">
+          </div>
+          <div class="book_details">
+            <h2>{{ noval.title }}</h2>
+            <div class="author">
+              <h4>作者：{{ noval.author }}</h4>
+              <span>{{ noval.minorCate }}</span>
+            </div>
+            <p class="book_details">{{ noval.shortIntro }}</p>
+          </div>
+        </li>
+      </ul>
+    </main>
   </div>
 </template>
 
 <script>
-import imgScale from './imgScale'
-export default {
-  components: {
-    imgScale
-  },
-  data() {
-    return {
-      url:
-        'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1559800042782&di=90a0b39b857f66e031a89a3f6f15a5c6&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201509%2F15%2F20150915192922_BszkR.thumb.700_0.jpeg',
-      clickUrl: '',
-      ImgShow: false
-    }
-  },
-  computed: {},
+  export default {
+    data() {
+      return {
+        indexData: [],
+        loading: true,
+      }
+    },
+    computed: {},
 
-  mounted() {},
+    mounted() {
+      this.getIndexData()
+    },
 
-  methods: {
-    selectImg(ev) {
-      console.log(this.ImgShow)
-      ev.stopPropagation()
-      this.ImgShow = true
-      this.clickUrl = this.url
+    methods: {
+      getIndexData() {
+        this.loading = true;
+        this.$ajax.get(this.$novel_url + 'index').then(data => {
+          console.log(data.data)
+          this.indexData = data.data.books;
+          this.loading = false;
+        })
+      },
+      //跳转小说详情
+      selectBook(id) {
+        this.$router.push({name: 'bookDetails', query: {id: id}})
+      }
     }
   }
-}
 </script>
 <style lang='less' scoped>
-.first_box {
-  width: 100%;
-  height: 100%;
-  background: rgb(253, 253, 253);
-  display: inline-block;
-  vertical-align: top;
-  position: relative;
-  .img_scale {
-    height: 200px;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    max-width: 80%;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    img {
-      height: 100%;
+  .first_box {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    main {
+      overflow-x: hidden;
+      padding: 10px 10px 50px 10px;
+      ul {
+
+        li {
+          height: 100px;
+          color: #555555;
+          display: flex;
+          flex-direction: row;
+          margin: 10px 0;
+          .book_cover {
+            display: inline-block;
+            height: 100%;
+            img {
+              height: 100%;
+            }
+          }
+          .book_details {
+            width: 100%;
+            padding-left: 10px;
+            h2 {
+              font-weight: bold;
+            }
+            .author {
+              position: relative;
+              h4 {
+                color: #ffa255;
+                line-height: 30px;
+              }
+              span {
+                position: absolute;
+                right: 0;
+                top: 0;
+                padding: 5px;
+                border: 1px solid #ccc;
+                border-radius: 3px;
+              }
+            }
+          }
+          p.book_details {
+            margin-top: 10px;
+            padding: 0;
+            height: 35px;
+            display: -webkit-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+          }
+        }
+      }
     }
+
   }
-}
 </style>
