@@ -43,5 +43,10 @@ export default new Router({
       name: 'bookDetails',
       component: resolve => require(['@/view/index/book/bookDetails'],resolve),
     },
+    {
+      path: '/article',
+      name: 'bookArticle',
+      component: resolve => require(['@/view/index/book/article'],resolve),
+    },
   ]
 })

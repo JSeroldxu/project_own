@@ -42,7 +42,6 @@
       getIndexData() {
         this.loading = true;
         this.$ajax.get(this.$novel_url + 'index').then(data => {
-          console.log(data.data)
           this.indexData = data.data.books;
           this.loading = false;
         })

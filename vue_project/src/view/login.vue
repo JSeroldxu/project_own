@@ -35,7 +35,6 @@
         this.$router.push({
           name: 'firstPage'
         })
-        console.log(123)
       }
     }
   }
